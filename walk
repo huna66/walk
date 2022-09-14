@@ -1,0 +1,140 @@
+ {'*', 'R', '*', ' ', '*', '*'},
+                                  {'*', ' ', ' ', ' ', '*', '*'},
+                                  {'*', '*', '*', ' ', '*', '*'},
+                                  {'*', '*', '*', ' ', '*', '*'},
+                                  {'*', '*', '*', ' ', '*', '*'},
+                                  {'*', '*', '*', ' ', ' ', ' '}
+R代表小人，abcd代表上下左右，*代表障碍物，空格代表能走
+#include<stdio.h>
+char nums[6][6] = {               {'*', 'R', '*', ' ', '*', '*'},
+                                  {'*', ' ', ' ', ' ', '*', '*'},
+                                  {'*', '*', '*', ' ', '*', '*'},
+                                  {'*', '*', '*', ' ', '*', '*'},
+                                  {'*', '*', '*', ' ', '*', '*'},
+                                  {'*', '*', '*', ' ', ' ', ' '}
+};
+int m1 = sizeof(nums) / sizeof(nums[0]);
+int n1 = sizeof(nums[0]);
+int start1=0;
+int start2=1;
+int end1=5;
+int end2=5;
+int move1,move2;
+//打印地图
+void printmap(char z[6][6])
+{
+    for (int i = 0; i < m1; i++)
+    {
+        for (int j = 0; j < n1; j++)
+        {            printf("%c ", nums[i][j]);
+        }
+        printf("\n");
+    }
+}
+//字母大写变成小写
+char low(char m)
+{
+    if(m>='A'&&m<='Z')
+    {
+        m=m+('a'-'A');
+    }
+    return m;
+}
+//向下走
+char down(char m)
+{
+    if(nums[move1+1][move2]!='*')
+    {
+        nums[move1][move2]=' ';
+        move1=move1+1;
+        nums[move1][move2]='R';
+    }
+    printmap(nums);
+ 
+    return 0;
+ 
+}
+//向上走
+char up(char m)
+{
+    if(nums[move1-1][move2]!='*')
+    {
+        nums[move1][move2]=' ';
+        move1=move1-1;
+        nums[move1][move2]='R';
+    }
+    printmap(nums);
+ 
+    return 0;
+ 
+}
+//向左走
+char left(char m)
+{
+    if(nums[move1][move2-1]!='*')
+    {
+        nums[move1][move2]=' ';
+        move2=move2-1;
+        nums[move1][move2]='R';
+    }
+    printmap(nums);
+ 
+    return 0;
+ 
+}
+//向左走
+char right(char m)
+{
+    if(nums[move1][move2+1]!='*')
+    {
+        nums[move1][move2]=' ';
+        move2=move2+1;
+        nums[move1][move2]='R';
+    }
+    printmap(nums);
+ 
+    return 0;
+ 
+}
+ 
+//判断方向
+void move(char z)
+{
+    switch (z) {
+        case 'a':
+            printf("down\n");
+            down(z);
+            break;
+        case 'b':
+            printf("up\n");
+            up(z);
+            break;
+        case 'c':
+            printf("left\n");
+            left(z);
+            break;
+        case 'd':
+            printf("right\n");
+            right(z);
+            break;
+ 
+    }
+ 
+}
+int main(){
+    printmap(nums);
+    move1=start1;
+    move2=start2;
+ 
+    do {
+        char o;
+ 
+        scanf("%c", &o);
+        o = low(o);
+        //printf("%c",o);
+        move(o);
+        if((move2==end2)&&(move1==end1))
+            break;
+    } while (1);
+}
+ 
